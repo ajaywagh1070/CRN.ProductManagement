@@ -82,6 +82,16 @@ JwtBearerDefaults.AuthenticationScheme)
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion =
@@ -116,6 +126,8 @@ app.UseHttpsRedirection();
 // Global Exception Middleware
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
+app.UseCors("AllowAll");
+
 // Authentication & Authorization
 app.UseAuthentication();
 app.UseAuthorization();
@@ -124,3 +136,6 @@ app.MapControllers();
 app.MapHealthChecks("/health");
 
 app.Run();
+public partial class Program
+{
+}

@@ -13,16 +13,31 @@ public class ItemService : IItemService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<ItemDto>> GetAllAsync()
+    public async Task<PagedResponse<ItemDto>> GetAllAsync(
+     int page,
+     int pageSize)
     {
         var items = await _unitOfWork.Items.GetAllAsync();
 
-        return items.Select(x => new ItemDto
+        var totalRecords = items.Count();
+
+        var pagedItems = items
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(x => new ItemDto
+            {
+                Id = x.Id,
+                ProductId = x.ProductId,
+                Quantity = x.Quantity
+            });
+
+        return new PagedResponse<ItemDto>
         {
-            Id = x.Id,
-            ProductId = x.ProductId,
-            Quantity = x.Quantity
-        });
+            Page = page,
+            PageSize = pageSize,
+            TotalRecords = totalRecords,
+            Data = pagedItems
+        };
     }
 
     public async Task<ItemDto?> GetByIdAsync(int id)

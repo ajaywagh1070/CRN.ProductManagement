@@ -2,9 +2,11 @@
 using CRN.ProductManagement.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRN.ProductManagement.API.Controllers;
 
+[Authorize]
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
@@ -18,9 +20,14 @@ public class ItemsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10)
     {
-        return Ok(await _itemService.GetAllAsync());
+        return Ok(
+            await _itemService.GetAllAsync(
+                page,
+                pageSize));
     }
 
     [HttpGet("{id}")]

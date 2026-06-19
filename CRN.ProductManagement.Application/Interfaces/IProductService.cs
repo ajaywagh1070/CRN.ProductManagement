@@ -1,13 +1,12 @@
 ﻿using CRN.ProductManagement.Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CRN.ProductManagement.Application.Interfaces
 {
     public interface IProductService
     {
-        Task<IEnumerable<ProductDto>> GetAllAsync();
+        Task<PagedResponse<ProductDto>> GetAllAsync(
+            int page,
+            int pageSize);
 
         Task<ProductDto?> GetByIdAsync(int id);
 

@@ -4,7 +4,9 @@ namespace CRN.ProductManagement.Application.Interfaces;
 
 public interface IItemService
 {
-    Task<IEnumerable<ItemDto>> GetAllAsync();
+    Task<PagedResponse<ItemDto>> GetAllAsync(
+        int page,
+        int pageSize);
 
     Task<ItemDto?> GetByIdAsync(int id);
 

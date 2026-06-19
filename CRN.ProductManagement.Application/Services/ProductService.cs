@@ -13,15 +13,30 @@ public class ProductService : IProductService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<ProductDto>> GetAllAsync()
+    public async Task<PagedResponse<ProductDto>> GetAllAsync(
+    int page,
+    int pageSize)
     {
         var products = await _unitOfWork.Products.GetAllAsync();
 
-        return products.Select(x => new ProductDto
+        var totalRecords = products.Count();
+
+        var pagedProducts = products
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(x => new ProductDto
+            {
+                Id = x.Id,
+                ProductName = x.ProductName
+            });
+
+        return new PagedResponse<ProductDto>
         {
-            Id = x.Id,
-            ProductName = x.ProductName
-        });
+            Page = page,
+            PageSize = pageSize,
+            TotalRecords = totalRecords,
+            Data = pagedProducts
+        };
     }
 
     public async Task<ProductDto?> GetByIdAsync(int id)

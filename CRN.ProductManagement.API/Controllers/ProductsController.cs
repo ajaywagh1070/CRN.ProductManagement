@@ -20,9 +20,14 @@ namespace CRN.ProductManagement.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10)
         {
-            var products = await _productService.GetAllAsync();
+            var products =
+                await _productService.GetAllAsync(
+                    page,
+                    pageSize);
 
             return Ok(products);
         }
