@@ -1,0 +1,29 @@
+
+services:
+
+  crn-api:
+    image: crn-product-api
+    container_name: crn-api
+    build:
+      context: .
+      dockerfile: CRN.ProductManagement.API/Dockerfile
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+    depends_on:
+      - sqlserver
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: crn-sql
+
+    environment:
+      SA_PASSWORD: "Password@123"
+      ACCEPT_EULA: "Y"
+
+    ports:
+      - "1433:1433"

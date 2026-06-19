@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path="dotnet.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="CRN.ProductManagement.API/CRN.ProductManagement.API.csproj" />
+  <Project Path="CRN.ProductManagement.Application/CRN.ProductManagement.Application.csproj" />
+  <Project Path="CRN.ProductManagement.Domain/CRN.ProductManagement.Domain.csproj" />
+  <Project Path="CRN.ProductManagement.Infrastructure/CRN.ProductManagement.Infrastructure.csproj" />
+  <Project Path="CRN.ProductManagement.Tests/CRN.ProductManagement.Tests.csproj" />
+</Solution>
